@@ -75,6 +75,7 @@ temp/
 *.tmp
 *.swp
 *.swo
+*.zip
 
 # ----------------------------
 # Environment variables / secrets

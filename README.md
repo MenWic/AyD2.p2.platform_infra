@@ -1,66 +1,64 @@
 # Platform Infra
 
-Repositorio de infraestructura para los servicios transversales de la plataforma.
+Infrastructure repository for the cross-cutting services of the platform.
 
-## Estructura esperada
+## Expected structure
 
 ```text
 platform_infra/
 ├── discovery_service/   # Eureka Server
-└── api_gateway/         # Pendiente
+└── api_gateway/         # API Gateway
 ```
 
-## Servicios
+## Services
 
-| Servicio | Puerto | Estado | Responsabilidad |
+| Service | Port | Status | Responsibility |
 |---|---:|---|---|
-| discovery_service | 8761 | Activo | Service Registry con Eureka Server |
-| api_gateway | 8080 | Activo | Entrada HTTP para el frontend y enrutamiento a microservicios |
-| iam_service_api | 8081 | Externo | Microservicio IAM, se registrará como Eureka Client |
-| conference_service | 8082 | Externo| Microservicio de conferencias |
-| wallet_service | 8083 | Externo | Microservicio de wallet/pagos |
+| discovery_service | 8761 | Active | Service Registry with Eureka Server |
+| api_gateway | 8080 | Active | HTTP entry point for the frontend and routing to micro-services |
+| iam-service | 8081 | External | IAM micro-service, registers as Eureka Client |
+| conference-service | 8082 | External | Conference micro-service |
+| wallet-service | 8083 | External | Wallet/payments micro-service |
 
-## Flujo esperado
-
-Cuando esté listo el Gateway:
+## Expected flow
 
 ```text
-frontend -> api_gateway -> Eureka -> microservicios
+frontend -> api_gateway -> Eureka -> micro-services
 ```
 
-## Orden recomendado de arranque
+## Recommended startup order
 
 ```text
 1. discovery_service
 2. api_gateway
-3-5. mciro-services 
+3-5. micro-services
 6. frontend
 ```
 
 ## Discovery Service
 
-`discovery_service` es el Eureka Server.
+`discovery_service` is the Eureka Server.
 
-Responsabilidad:
+Responsibility:
 
 ```text
-Registrar microservicios y permitir service discovery interno.
+Register micro-services and allow internal service discovery.
 ```
 
-No debe contener:
+Must not contain:
 
 ```text
-- lógica de negocio;
-- base de datos;
+- business logic;
+- database;
 - JWT;
 - Flyway;
-- controladores de negocio;
-- rutas para frontend.
+- business controllers;
+- frontend routes.
 ```
 
-## Ejecutar Discovery Service
+## Run Discovery Service
 
-Desde la raíz de `platform_infra`:
+From the root of `platform_infra`:
 
 ### Windows PowerShell
 
@@ -76,9 +74,9 @@ cd discovery_service
 ./gradlew clean bootRun
 ```
 
-## Verificar Eureka
+## Verify Eureka
 
-Abrir en el navegador:
+Open in browser:
 
 ```text
 http://localhost:8761/
@@ -90,33 +88,34 @@ Healthcheck:
 http://localhost:8761/actuator/health
 ```
 
-Resultado esperado:
+Expected result:
 
 ```text
 Eureka dashboard visible.
-Sin instancias registradas hasta levantar IAM u otros microservicios.
+No instances registered until IAM or other micro-services are started.
 ```
 
-## Reglas de Git
+## Git rules
 
-Este repositorio no debe trackear:
+This repository must not track:
 
 ```text
 - build/
 - .gradle/
 - .idea/
-- archivos .env
+- .env files
 - application-local.*
 - application-secret.*
 - application-private.*
 - application-prod.*
-- llaves, certificados o keystores
+- keys, certificates, or keystores
 - logs
-- reportes generados
-- outputs temporales
+- generated reports
+- temporary outputs
+- *.zip archives
 ```
 
-Sí debe trackear:
+Must track:
 
 ```text
 - build.gradle
@@ -129,8 +128,9 @@ Sí debe trackear:
 - .gitignore
 ```
 
-## Nota de seguridad
+## Security note
 
-Los archivos con credenciales, secretos, certificados, llaves privadas, configuraciones productivas o variables sensibles deben mantenerse fuera de Git.
+Files containing credentials, secrets, certificates, private keys, production configurations,
+or sensitive variables must be kept out of Git.
 
-Usar variables de entorno o archivos locales ignorados para valores sensibles.
+Use environment variables or locally-ignored files for sensitive values.
