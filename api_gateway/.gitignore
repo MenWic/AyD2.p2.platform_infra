@@ -1,0 +1,146 @@
+# ============================================================
+# api_gateway - Project .gitignore
+# This project lives inside platform_infra/api_gateway/
+# ============================================================
+
+# ----------------------------
+# Gradle / Java build outputs
+# ----------------------------
+.gradle/
+build/
+out/
+target/
+bin/
+
+# Keep Gradle Wrapper files tracked
+!gradle/wrapper/gradle-wrapper.jar
+!gradlew
+!gradlew.bat
+
+# ----------------------------
+# IntelliJ IDEA
+# ----------------------------
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# ----------------------------
+# VS Code
+# ----------------------------
+.vscode/
+
+# ----------------------------
+# STS / Eclipse
+# ----------------------------
+.apt_generated/
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache/
+
+# ----------------------------
+# NetBeans
+# ----------------------------
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# ----------------------------
+# OS files
+# ----------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ----------------------------
+# Logs
+# ----------------------------
+*.log
+logs/
+
+# ----------------------------
+# Runtime / temp files
+# ----------------------------
+tmp/
+temp/
+*.tmp
+*.swp
+*.swo
+
+# ----------------------------
+# Environment variables / secrets
+# ----------------------------
+.env
+.env.*
+!.env.example
+
+# ----------------------------
+# Sensitive Spring configs
+# Keep src/main/resources/application.properties tracked.
+# Keep real local/prod/secret config outside Git.
+# ----------------------------
+src/main/resources/application-local.properties
+src/main/resources/application-local.yml
+src/main/resources/application-local.yaml
+
+src/main/resources/application-secret.properties
+src/main/resources/application-secret.yml
+src/main/resources/application-secret.yaml
+
+src/main/resources/application-private.properties
+src/main/resources/application-private.yml
+src/main/resources/application-private.yaml
+
+src/main/resources/application-dev.properties
+src/main/resources/application-dev.yml
+src/main/resources/application-dev.yaml
+
+src/main/resources/application-prod.properties
+src/main/resources/application-prod.yml
+src/main/resources/application-prod.yaml
+
+src/main/resources/application-production.properties
+src/main/resources/application-production.yml
+src/main/resources/application-production.yaml
+
+# ----------------------------
+# Certificates / keys / keystores
+# ----------------------------
+*.pem
+*.key
+*.crt
+*.cer
+*.p12
+*.pfx
+*.jks
+*.keystore
+
+# ----------------------------
+# Docker local overrides / local volumes
+# ----------------------------
+docker-compose.override.yml
+docker-compose.local.yml
+docker-compose.prod.yml
+docker-data/
+volumes/
+
+# ----------------------------
+# Generated reports / coverage
+# ----------------------------
+reports/
+test-results/
+jacoco/
+coverage/
+
+# ----------------------------
+# Local helper/backups
+# ----------------------------
+*.local
+*.backup
+*.bak
+*.orig
