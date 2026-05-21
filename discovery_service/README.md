@@ -1,25 +1,26 @@
 
 # Discovery Service
 
-Servicio de descubrimiento de microservicios basado en Spring Cloud Netflix Eureka Server.
+Micro-service discovery service based on Spring Cloud Netflix Eureka Server.
 
-Forma parte del repositorio:
+Part of the repository:
 
 ```text
 platform_infra/
 └── discovery_service/
 ```
 
-## Responsabilidad
+## Responsibility
 
-`discovery_service` registra los microservicios disponibles para que otros componentes internos puedan descubrirlos.
+`discovery_service` registers available micro-services so that other internal components
+can discover them.
 
-No es un API Gateway y no debe ser consumido directamente por el frontend.
+It is not an API Gateway and must not be consumed directly by the frontend.
 
-Flujo final esperado:
+Expected final flow:
 
 ```text
-frontend -> api_gateway -> Eureka -> microservicios
+frontend -> api_gateway -> Eureka -> micro-services
 ```
 
 ## Stack
@@ -33,7 +34,7 @@ Eureka Server
 Actuator
 ```
 
-## Puerto
+## Port
 
 ```text
 8761
@@ -51,15 +52,15 @@ Healthcheck:
 http://localhost:8761/actuator/health
 ```
 
-## Configuración principal
+## Main configuration
 
-Archivo:
+File:
 
 ```text
 src/main/resources/application.properties
 ```
 
-Configuración base:
+Base configuration:
 
 ```properties
 spring.application.name=discovery-service
@@ -69,22 +70,28 @@ server.port=8761
 eureka.client.register-with-eureka=false
 eureka.client.fetch-registry=false
 
-eureka.server.enable-self-preservation=false
-
 management.endpoints.web.exposure.include=health,info
 ```
 
-## Ejecutar el servicio
+Development profile (`application-dev.properties`):
+
+```properties
+# Disable self-preservation in dev for faster instance eviction during local development loops.
+# Production defaults to self-preservation=true (Spring default).
+eureka.server.enable-self-preservation=false
+```
+
+## Run the service
 
 ### Windows PowerShell
 
-Desde `platform_infra/discovery_service`:
+From `platform_infra/discovery_service`:
 
 ```powershell
 .\gradlew clean bootRun
 ```
 
-O desde `platform_infra`:
+Or from `platform_infra`:
 
 ```powershell
 cd discovery_service
@@ -93,20 +100,20 @@ cd discovery_service
 
 ### Linux / macOS / Git Bash
 
-Desde `platform_infra/discovery_service`:
+From `platform_infra/discovery_service`:
 
 ```bash
 ./gradlew clean bootRun
 ```
 
-O desde `platform_infra`:
+Or from `platform_infra`:
 
 ```bash
 cd discovery_service
 ./gradlew clean bootRun
 ```
 
-## Ejecutar tests
+## Run tests
 
 ### Windows PowerShell
 
@@ -120,7 +127,7 @@ cd discovery_service
 ./gradlew test
 ```
 
-## Limpiar build
+## Clean build
 
 ### Windows PowerShell
 
@@ -134,9 +141,9 @@ cd discovery_service
 ./gradlew clean
 ```
 
-## Resultado esperado al levantar
+## Expected output on startup
 
-En consola debe aparecer algo equivalente a:
+The console should display something equivalent to:
 
 ```text
 Started Eureka Server
@@ -144,25 +151,25 @@ Tomcat started on port 8761
 Started DiscoveryServiceApplication
 ```
 
-En navegador:
+In the browser:
 
 ```text
 http://localhost:8761/
 ```
 
-Debe mostrarse el dashboard de Spring Eureka.
+The Spring Eureka dashboard should appear.
 
-Si todavía no hay microservicios levantados, debe verse:
+If no micro-services are running yet, you will see:
 
 ```text
 No instances available
 ```
 
-Eso es correcto.
+That is correct.
 
-## Advertencias normales en desarrollo
+## Normal warnings during development
 
-Estas advertencias pueden aparecer en local y no bloquean el arranque:
+These warnings may appear locally and do not block startup:
 
 ```text
 Cannot determine local hostname
@@ -170,24 +177,27 @@ Spring Cloud LoadBalancer is currently working with the default cache
 Self preservation mode is turned off
 ```
 
-Para producción se revisan valores de red, self-preservation, cache y monitoreo.
+For production, review network settings, self-preservation, cache, and monitoring configuration.
 
-## No debe agregarse a este servicio
+## Must not be added to this service
 
 ```text
-- endpoints de negocio;
-- seguridad JWT de usuarios;
-- conexión a base de datos;
+- business endpoints;
+- user JWT security;
+- database connection;
 - Flyway;
 - JPA;
-- lógica de IAM, Conference o Wallet;
+- IAM, Conference, or Wallet logic;
 - API Gateway;
-- rutas de frontend.
+- frontend routes.
 ```
 
-## Archivos de configuración de entorno fuera de Git (solicitar a @MenWic)
+## Environment-specific configuration files
 
-Este proyecto no debe trackear:
+This project must not track environment-specific configuration files.
+Contact the platform team for environment-specific configuration files.
+
+Files excluded from Git:
 
 ```text
 build/
@@ -201,6 +211,5 @@ application-private.*
 application-prod.*
 logs/
 *.log
-llaves/certificados/keystores
+keys/certificates/keystores
 ```
-
